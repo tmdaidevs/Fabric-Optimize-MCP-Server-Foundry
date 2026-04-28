@@ -119,5 +119,18 @@ Add to `.vscode/mcp.json` (included in repo) and provide the system key when pro
 |---------------------|-------------|---------|
 | `BACKEND_URL` | Backend API base URL | `https://func-ygp7lcleawheu.azurewebsites.net/api/tools` |
 
+## CI/CD
+
+The repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that deploys on push to `master`.
+
+### Required Secrets
+| Secret | Description |
+|--------|-------------|
+| `AZURE_CLIENT_ID` | Service principal client ID |
+| `AZURE_TENANT_ID` | Azure tenant ID |
+| `AZURE_ENV_NAME` | azd environment name |
+| `AZURE_LOCATION` | Azure region (e.g. `swedencentral`) |
+| `AZURE_SUBSCRIPTION_ID` | Azure subscription ID |
+
 ## License
 MIT

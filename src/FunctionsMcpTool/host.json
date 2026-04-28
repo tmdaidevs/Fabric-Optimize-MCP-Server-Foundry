@@ -2,8 +2,11 @@
   "version": "2.0",
   "extensions": {
     "mcp": {
+      "serverName": "Fabric Optimize MCP Server",
+      "serverVersion": "1.0.0",
+      "instructions": "Fabric optimization server with 30 tools for scanning and fixing Lakehouses, Warehouses, Eventhouses, Semantic Models, and Gateways.",
       "system": {
-        "webhookAuthorizationLevel": "Anonymous"
+        "webhookAuthorizationLevel": "System"
       }
     }
   },
