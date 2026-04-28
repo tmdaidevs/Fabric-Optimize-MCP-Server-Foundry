@@ -5,9 +5,9 @@ import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from ..clients.fabric_client import list_eventhouses, get_eventhouse, list_kql_databases
-from ..clients.kql_client import run_kql_diagnostics, execute_kql_mgmt, execute_kql_query
-from .rule_engine import render_rule_report, RuleResult
+from clients.fabric_client import list_eventhouses, get_eventhouse, list_kql_databases
+from clients.kql_client import run_kql_diagnostics, execute_kql_mgmt, execute_kql_query
+from tools.rule_engine import render_rule_report, RuleResult
 
 KqlRow = Dict[str, Any]
 

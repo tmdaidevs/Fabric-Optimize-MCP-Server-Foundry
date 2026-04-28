@@ -11,7 +11,7 @@ from urllib.parse import quote
 
 import requests
 
-from ..auth.fabric_auth import get_access_token
+from auth.fabric_auth import get_access_token
 
 logger = logging.getLogger(__name__)
 

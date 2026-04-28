@@ -1,6 +1,6 @@
 """Tool handlers for Fabric authentication."""
 
-from ..auth.fabric_auth import login, logout, get_auth_status
+from auth.fabric_auth import login, logout, get_auth_status
 
 
 def auth_login(args: dict) -> str:

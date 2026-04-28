@@ -3,7 +3,7 @@
 from datetime import datetime, timezone
 from typing import Dict, List
 
-from ..clients.fabric_client import (
+from clients.fabric_client import (
     list_workspaces,
     get_workspace,
     list_workspace_items,

@@ -9,7 +9,7 @@ from urllib.parse import quote
 
 import requests
 
-from ..auth.fabric_auth import get_token_for_scope
+from auth.fabric_auth import get_token_for_scope
 
 ONELAKE_DFS = "https://onelake.dfs.fabric.microsoft.com"
 STORAGE_SCOPE = "https://storage.azure.com/.default"

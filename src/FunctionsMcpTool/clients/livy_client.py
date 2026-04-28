@@ -9,7 +9,7 @@ from urllib.parse import quote
 
 import requests
 
-from ..auth.fabric_auth import get_access_token
+from auth.fabric_auth import get_access_token
 
 FABRIC_API_BASE = "https://api.fabric.microsoft.com"
 LIVY_API_VERSION = "2023-12-01"

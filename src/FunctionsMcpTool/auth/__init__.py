@@ -1,4 +1,4 @@
-from .fabric_auth import (
+from auth.fabric_auth import (
     get_auth_status,
     require_auth,
     init_server_auth,

@@ -1,11 +1,11 @@
-from .rule_engine import RuleResult, RuleSeverity, RuleStatus, render_rule_report
-from .auth_tools import auth_tools
-from .workspace import workspace_tools
-from .lakehouse import lakehouse_tools
-from .warehouse import warehouse_tools
-from .eventhouse import eventhouse_tools
-from .semantic_model import semantic_model_tools
-from .gateway import gateway_tools
+from tools.rule_engine import RuleResult, RuleSeverity, RuleStatus, render_rule_report
+from tools.auth_tools import auth_tools
+from tools.workspace import workspace_tools
+from tools.lakehouse import lakehouse_tools
+from tools.warehouse import warehouse_tools
+from tools.eventhouse import eventhouse_tools
+from tools.semantic_model import semantic_model_tools
+from tools.gateway import gateway_tools
 
 AUTH_TOOL_NAMES = {t["name"] for t in auth_tools}
 all_tools = (

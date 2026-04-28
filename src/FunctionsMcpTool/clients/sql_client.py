@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional
 
 import pytds
 
-from ..auth.fabric_auth import get_token_for_scope, SQL_SCOPE
+from auth.fabric_auth import get_token_for_scope, SQL_SCOPE
 
 SqlRow = Dict[str, Any]
 

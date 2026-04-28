@@ -7,8 +7,8 @@ from html import escape as html_escape
 
 import requests
 
-from ..auth.fabric_auth import get_token_for_scope
-from .fabric_client import get_workspace
+from auth.fabric_auth import get_token_for_scope
+from clients.fabric_client import get_workspace
 
 ANALYSIS_SCOPE = "https://analysis.windows.net/powerbi/api/.default"
 

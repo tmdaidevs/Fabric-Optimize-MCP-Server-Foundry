@@ -4,12 +4,12 @@ import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from ..clients.fabric_client import (
+from clients.fabric_client import (
     get_warehouse,
     list_warehouses,
 )
-from ..clients.sql_client import execute_sql_query, run_diagnostic_queries
-from .rule_engine import RuleResult, render_rule_report
+from clients.sql_client import execute_sql_query, run_diagnostic_queries
+from tools.rule_engine import RuleResult, render_rule_report
 
 # ──────────────────────────────────────────────
 # Input validation — prevent SQL injection in auto-fix

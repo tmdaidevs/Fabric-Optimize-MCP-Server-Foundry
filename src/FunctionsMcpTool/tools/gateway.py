@@ -3,7 +3,7 @@
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from ..clients.fabric_client import (
+from clients.fabric_client import (
     list_gateways,
     list_connections,
     list_gateway_datasources,
@@ -13,7 +13,7 @@ from ..clients.fabric_client import (
     delete_gateway_datasource_user,
     delete_connection,
 )
-from .rule_engine import RuleResult, render_rule_report
+from tools.rule_engine import RuleResult, render_rule_report
 
 
 # ──────────────────────────────────────────────

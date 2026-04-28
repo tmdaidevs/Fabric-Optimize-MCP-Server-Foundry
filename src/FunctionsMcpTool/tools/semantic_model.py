@@ -12,15 +12,15 @@ import base64
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from ..clients.fabric_client import (
+from clients.fabric_client import (
     list_semantic_models,
     execute_semantic_model_query,
     get_workspace,
     get_semantic_model_definition,
     update_semantic_model_definition,
 )
-from ..clients.xmla_client import run_xmla_dmv_queries, execute_xmla_command_by_id
-from .rule_engine import render_rule_report, RuleResult
+from clients.xmla_client import run_xmla_dmv_queries, execute_xmla_command_by_id
+from tools.rule_engine import render_rule_report, RuleResult
 
 # ---------------------------------------------------------------------------
 # Constants — DAX / DMV / MDSCHEMA queries

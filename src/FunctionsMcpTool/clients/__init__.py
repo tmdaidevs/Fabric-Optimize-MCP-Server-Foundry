@@ -1,4 +1,4 @@
-from .fabric_client import (
+from clients.fabric_client import (
     fabric_fetch,
     fabric_fetch_paginated,
     list_workspaces,
@@ -32,16 +32,16 @@ from .fabric_client import (
     delete_gateway_datasource_user,
 )
 
-from .sql_client import execute_sql_query, run_diagnostic_queries
-from .kql_client import execute_kql_query, execute_kql_mgmt, run_kql_diagnostics
-from .livy_client import run_spark_fixes_via_livy
-from .xmla_client import (
+from clients.sql_client import execute_sql_query, run_diagnostic_queries
+from clients.kql_client import execute_kql_query, execute_kql_mgmt, run_kql_diagnostics
+from clients.livy_client import run_spark_fixes_via_livy
+from clients.xmla_client import (
     execute_xmla_query,
     run_xmla_dmv_queries,
     execute_xmla_command,
     execute_xmla_command_by_id,
 )
-from .onelake_client import (
+from clients.onelake_client import (
     list_onelake_files,
     read_onelake_file,
     read_delta_log,

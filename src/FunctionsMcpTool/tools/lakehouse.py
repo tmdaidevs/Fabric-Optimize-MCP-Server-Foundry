@@ -4,7 +4,7 @@ import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from ..clients.fabric_client import (
+from clients.fabric_client import (
     get_lakehouse,
     get_workspace,
     list_lakehouse_tables,
@@ -13,9 +13,9 @@ from ..clients.fabric_client import (
     get_lakehouse_job_status,
     run_temporary_notebook,
 )
-from ..clients.livy_client import run_spark_fixes_via_livy
-from ..clients.sql_client import run_diagnostic_queries
-from ..clients.onelake_client import (
+from clients.livy_client import run_spark_fixes_via_livy
+from clients.sql_client import run_diagnostic_queries
+from clients.onelake_client import (
     read_delta_log,
     get_partition_columns,
     get_table_config,
@@ -24,7 +24,7 @@ from ..clients.onelake_client import (
     get_file_size_stats,
     days_since_timestamp,
 )
-from .rule_engine import RuleResult, render_rule_report
+from tools.rule_engine import RuleResult, render_rule_report
 
 # ──────────────────────────────────────────────
 # Input validation — prevent Spark SQL injection

@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional
 
 import requests
 
-from ..auth.fabric_auth import get_token_for_scope, KUSTO_SCOPE
+from auth.fabric_auth import get_token_for_scope, KUSTO_SCOPE
 
 KqlRow = Dict[str, Any]
 
