@@ -5,4 +5,3 @@
 azure-functions
 azure-identity
 requests
-pytds
