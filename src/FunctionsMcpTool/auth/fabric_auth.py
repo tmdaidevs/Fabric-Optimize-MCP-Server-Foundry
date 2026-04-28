@@ -55,7 +55,7 @@ def init_server_auth() -> str:
     """
     method: AuthMethod = os.environ.get("FABRIC_AUTH_METHOD", "default")  # type: ignore[assignment]
     tenant_id = os.environ.get("FABRIC_TENANT_ID")
-    client_id = os.environ.get("FABRIC_CLIENT_ID")
+    client_id = os.environ.get("FABRIC_CLIENT_ID") or os.environ.get("AZURE_CLIENT_ID")
     client_secret = os.environ.get("FABRIC_CLIENT_SECRET")
 
     return login(method, tenant_id=tenant_id, client_id=client_id, client_secret=client_secret)
