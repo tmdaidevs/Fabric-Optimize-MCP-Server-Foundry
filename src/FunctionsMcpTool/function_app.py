@@ -1,25 +1,44 @@
 import logging
 import json
+import os
+import time
 
 import azure.functions as func
 import requests
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
-BACKEND_URL = "https://func-ygp7lcleawheu.azurewebsites.net/api/tools"
+BACKEND_URL = os.environ.get("BACKEND_URL", "https://func-ygp7lcleawheu.azurewebsites.net/api/tools")
 
 
 def call_backend(tool_name: str, args: dict = None) -> str:
-    try:
-        resp = requests.post(
-            f"{BACKEND_URL}/{tool_name}", json=args or {}, timeout=120
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        return data.get("result", json.dumps(data))
-    except Exception as e:
-        logging.error(f"Error calling {tool_name}: {e}")
-        return f"Error calling {tool_name}: {str(e)}"
+    max_retries = 3
+    for attempt in range(max_retries + 1):
+        try:
+            resp = requests.post(
+                f"{BACKEND_URL}/{tool_name}", json=args or {}, timeout=120
+            )
+            if resp.status_code == 429 or resp.status_code >= 500:
+                if attempt < max_retries:
+                    delay = min(2 ** attempt, 16)
+                    retry_after = resp.headers.get("Retry-After")
+                    if retry_after:
+                        delay = int(retry_after)
+                    logging.warning(f"Retrying {tool_name} in {delay}s (attempt {attempt + 1})")
+                    time.sleep(delay)
+                    continue
+            resp.raise_for_status()
+            data = resp.json()
+            return data.get("result", json.dumps(data))
+        except requests.exceptions.Timeout:
+            if attempt < max_retries:
+                logging.warning(f"Timeout calling {tool_name}, retrying (attempt {attempt + 1})")
+                continue
+            return f"Error: {tool_name} timed out after {max_retries} retries"
+        except Exception as e:
+            logging.error(f"Error calling {tool_name}: {e}")
+            return f"Error calling {tool_name}: {str(e)}"
+    return f"Error: {tool_name} failed after {max_retries} retries"
 
 
 # ---------------------------------------------------------------------------
