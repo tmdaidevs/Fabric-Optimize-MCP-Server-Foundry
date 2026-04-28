@@ -44,7 +44,7 @@ for _tool in all_tools:
     # Collect required properties for decorators
     _req_props = [(k, _props[k].get("description", k)) for k in _required if k in _props]
 
-    def _make_handler(tool):
+    def _make_handler(tool, required_params):
         def handler(**kwargs) -> str:
             try:
                 _ensure_auth()
@@ -56,11 +56,22 @@ for _tool in all_tools:
             except Exception as e:
                 logging.error(f"Tool {tool['name']} error: {e}")
                 return f"Error: {str(e)}"
-        handler.__name__ = tool["name"]
-        handler.__doc__ = tool["description"]
-        return handler
 
-    _handler = _make_handler(_tool)
+        # Build proper function signature with explicit params
+        # The MCP extension requires named params, not **kwargs
+        import types
+        params = ", ".join(required_params) if required_params else ""
+        if params:
+            code = f"def {tool['name']}({params}) -> str:\n    return _inner({', '.join(f'{p}={p}' for p in required_params)})"
+        else:
+            code = f"def {tool['name']}() -> str:\n    return _inner()"
+        local_ns = {"_inner": handler}
+        exec(code, local_ns)
+        fn = local_ns[tool["name"]]
+        fn.__doc__ = tool["description"]
+        return fn
+
+    _handler = _make_handler(_tool, list(_required))
 
     for _pname, _pdesc in reversed(_req_props):
         _handler = app.mcp_tool_property(arg_name=_pname, description=_pdesc)(_handler)
