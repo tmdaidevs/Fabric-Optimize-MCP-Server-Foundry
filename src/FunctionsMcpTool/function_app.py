@@ -3,10 +3,13 @@ import os
 import re
 
 import azure.functions as func
+from botbuilder.core import BotFrameworkAdapter, BotFrameworkAdapterSettings
+from botbuilder.schema import Activity
 
 from auth.fabric_auth import init_server_auth, require_auth
 from tools import all_tools, AUTH_TOOL_NAMES
 from clients.fabric_client import list_workspaces
+from bot.teams_bot import FabricOptimizerBot
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
@@ -77,3 +80,33 @@ for _tool in all_tools:
         _handler = app.mcp_tool_property(arg_name=_pname, description=_pdesc)(_handler)
 
     app.mcp_tool()(_handler)
+
+
+# --- Teams Bot endpoint ---
+_bot_settings = BotFrameworkAdapterSettings(
+    app_id=os.environ.get("MicrosoftAppId", ""),
+    app_password=os.environ.get("MicrosoftAppPassword", ""),
+)
+_adapter = BotFrameworkAdapter(_bot_settings)
+_bot = FabricOptimizerBot()
+
+
+@app.route(route="messages", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
+async def messages(req: func.HttpRequest) -> func.HttpResponse:
+    """Teams bot messages endpoint."""
+    if "application/json" not in (req.headers.get("Content-Type") or ""):
+        return func.HttpResponse(status_code=415)
+
+    body = req.get_json()
+    activity = Activity().deserialize(body)
+    auth_header = req.headers.get("Authorization", "")
+
+    async def _turn_callback(turn_context):
+        await _bot.on_turn(turn_context)
+
+    await _adapter.process_activity(activity, auth_header, _turn_callback)
+    return func.HttpResponse(status_code=200)
+
+
+# Import orchestration to register durable functions
+import orchestration.daily_scan  # noqa: E402, F401

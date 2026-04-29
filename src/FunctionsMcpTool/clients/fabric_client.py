@@ -259,6 +259,17 @@ def get_workspace(workspace_id: str) -> Dict[str, Any]:
     return fabric_fetch(f"/workspaces/{quote(workspace_id, safe='')}")
 
 
+def list_workspace_role_assignments(workspace_id: str) -> List[Dict[str, Any]]:
+    """List role assignments for a workspace. Returns [{id, principal: {id, type, displayName}, role}]."""
+    return fabric_fetch_paginated(f"/workspaces/{quote(workspace_id, safe='')}/roleAssignments")
+
+
+def get_workspace_admins(workspace_id: str) -> List[Dict[str, Any]]:
+    """Return only Admin-role principals for a workspace."""
+    assignments = list_workspace_role_assignments(workspace_id)
+    return [a for a in assignments if a.get("role") == "Admin"]
+
+
 def list_workspace_items(workspace_id: str, item_type: Optional[str] = None) -> List[Dict[str, Any]]:
     path = f"/workspaces/{quote(workspace_id, safe='')}/items"
     if item_type:
