@@ -3,6 +3,7 @@ import os
 import re
 
 import azure.functions as func
+import azure.durable_functions as df
 from botbuilder.core import BotFrameworkAdapter, BotFrameworkAdapterSettings
 from botbuilder.schema import Activity
 
@@ -11,7 +12,7 @@ from tools import all_tools, AUTH_TOOL_NAMES
 from clients.fabric_client import list_workspaces
 from bot.teams_bot import FabricOptimizerBot
 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+app = df.DFApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 GUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", re.IGNORECASE)
 
@@ -109,4 +110,5 @@ async def messages(req: func.HttpRequest) -> func.HttpResponse:
 
 
 # Import orchestration to register durable functions
-import orchestration.daily_scan  # noqa: E402, F401
+from orchestration.daily_scan import register_durable_functions
+register_durable_functions(app)
