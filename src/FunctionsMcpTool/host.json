@@ -8,12 +8,6 @@
       "system": {
         "webhookAuthorizationLevel": "System"
       }
-    },
-    "durableTask": {
-      "storageProvider": {
-        "type": "netherite",
-        "connectionName": "AzureWebJobsStorage"
-      }
     }
   },
   "logging": {

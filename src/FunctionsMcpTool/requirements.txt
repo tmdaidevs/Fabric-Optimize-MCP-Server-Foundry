@@ -3,7 +3,6 @@ azure-functions
 azure-identity
 requests
 python-tds
-azure-functions-durable
 botbuilder-core
 botbuilder-integration-aiohttp
 azure-ai-projects
